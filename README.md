@@ -1,5 +1,10 @@
 # MobileNetApp-MLKit
-![MobileNetApp-MLKit DEMO](resource/MobileNetApp-MLKit-example.gif?raw=true)
+
+본 프로젝트는 [MoTLabs/mot-ios-tensorflow](https://github.com/motlabs/mot-ios-tensorflow)에서 연재하는 iOS용 머신러닝 모델 사용법에대한 예제프로젝트입니다.<br>
+
+![DEMO-MLKit](https://github.com/tucan9389/MobileNetApp-MLKit/raw/master/resource/MobileNet-MLKit-DEMO.gif?raw=true)
+
+>  [Core ML 사용했던 예제](https://github.com/tucan9389/MobileNetApp-CoreML)와 동일한 UI를 사용했습니다.
 
 ## 요구환경
 
@@ -10,7 +15,7 @@
 
 ## 준비물
 
-- Tensorflow Lite용 모델(`mobilenet_quant_v1_224.tflite`)과 레이블 파일(`labels.txt`)
+- Tensorflow Lite 모델(`mobilenet_quant_v1_224.tflite`)과 레이블 파일(`labels.txt`)<br>
   ☞ [Tensorflow Lite 홈페이지에서 다운](https://www.tensorflow.org/versions/r1.5/mobile/tflite/demo_android)
 
 ## 빌드 준비

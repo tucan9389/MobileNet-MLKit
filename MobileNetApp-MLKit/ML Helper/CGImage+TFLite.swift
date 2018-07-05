@@ -34,15 +34,13 @@ extension CGImage {
         let newHeight = Int(size.height)
         let dataSize = newWidth * newHeight * oldComponentsCount * batchSize
         var imageData = [UInt8](repeating: 0, count: dataSize)
-        guard let context = CGContext(
-            data: &imageData,
-            width: newWidth,
-            height: newHeight,
-            bitsPerComponent: self.bitsPerComponent,
-            bytesPerRow: oldComponentsCount * newWidth,
-            space: CGColorSpaceCreateDeviceRGB(),
-            bitmapInfo: CGBitmapInfo.byteOrder32Big.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue
-            ) else {
+        guard let context = CGContext(data: &imageData,
+                                      width: newWidth,
+                                      height: newHeight,
+                                      bitsPerComponent: self.bitsPerComponent,
+                                      bytesPerRow: oldComponentsCount * newWidth,
+                                      space: CGColorSpaceCreateDeviceRGB(),
+                                      bitmapInfo: CGBitmapInfo.byteOrder32Big.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue) else {
                 return nil
         }
         context.draw(self, in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
