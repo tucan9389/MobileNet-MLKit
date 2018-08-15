@@ -30,16 +30,13 @@ class ViewController: UIViewController, VideoCaptureDelegate {
     // MARK: - AV 프로퍼티
     
     var videoCapture: VideoCapture!
-    let semaphore = DispatchSemaphore(value: 2)
-    
     
     
     // MARK: - 라이프사이클 메소드
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+
         // 모델 로드
         self.labelLabel.text = "로컬에 있는 모델을 불러오고 있습니다...\n"
         loadLocalModel()
@@ -114,8 +111,7 @@ class ViewController: UIViewController, VideoCaptureDelegate {
             self.labelLabel.text = "Something Wrong"
             self.confidenceLabel.text = "- %"
             
-        }
-        
+        }   
     }
     
     
@@ -126,26 +122,10 @@ class ViewController: UIViewController, VideoCaptureDelegate {
         // 카메라에서 캡쳐된 화면은 pixelBuffer에 담김.
         // Vision 프레임워크에서는 이미지 대신 pixelBuffer를 바로 사용 가능
         guard let pixelBuffer = pixelBuffer else { return }
-        
-        
-        // 비디오 캡쳐 큐 멈추기
-        // 추론하는 동안은 메인스레드로 이동하여 처리
-        semaphore.wait()
-        
-        
-        // 추론은 메인스레드에서 실행시키며
-        // 추론 결과값 출력도 메인스레드에서 처리
-        DispatchQueue.main.async {
-            // 추론!
-            self.predictUsingVision(pixelBuffer: pixelBuffer) {
-                
-                // 멈춘 스레드를 풀어줌(semaphore.signal())
-                self.semaphore.signal()
-            }
-        }
-        
-    }
 
+            // 추론!
+            self.predictUsingVision(pixelBuffer: pixelBuffer) { }
+    }
 }
 
 extension ViewController {
