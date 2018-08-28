@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ViewController: UIViewController, VideoCaptureDelegate {
+class ViewController: UIViewController {
     
     // MARK: - UI 프로퍼티
     
@@ -72,15 +72,33 @@ class ViewController: UIViewController, VideoCaptureDelegate {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        resizePreviewLayer()
+    }
+    
     func resizePreviewLayer() {
         videoCapture.previewLayer?.frame = videoPreview.bounds
     }
-    
-    
-    // MARK: - 추론하기
-    
-    func predictUsingVision(pixelBuffer: CVPixelBuffer, completion: @escaping (() -> ())) {
+}
 
+// MARK: - VideoCaptureDelegate
+extension ViewController: VideoCaptureDelegate {
+    func videoCapture(_ capture: VideoCapture, didCaptureVideoFrame pixelBuffer: CVPixelBuffer?/*, timestamp: CMTime*/) {
+        
+        // 카메라에서 캡쳐된 화면은 pixelBuffer에 담김.
+        // Vision 프레임워크에서는 이미지 대신 pixelBuffer를 바로 사용 가능
+        guard let pixelBuffer = pixelBuffer else { return }
+        
+        // 추론!
+        self.predictUsingVision(pixelBuffer: pixelBuffer) { }
+    }
+}
+
+// MARK: - 추론하기
+extension ViewController {
+    func predictUsingVision(pixelBuffer: CVPixelBuffer, completion: @escaping (() -> ())) {
+        
         let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
         
         DispatchQueue.global(qos: .userInitiated).async {
@@ -101,7 +119,7 @@ class ViewController: UIViewController, VideoCaptureDelegate {
         }
         
     }
-
+    
     func show(for results: [(label: String, confidence: Float)]) {
         
         if let result = results.first {
@@ -111,20 +129,7 @@ class ViewController: UIViewController, VideoCaptureDelegate {
             self.labelLabel.text = "Something Wrong"
             self.confidenceLabel.text = "- %"
             
-        }   
-    }
-    
-    
-    // MARK: - VideoCaptureDelegate
-    
-    func videoCapture(_ capture: VideoCapture, didCaptureVideoFrame pixelBuffer: CVPixelBuffer?/*, timestamp: CMTime*/) {
-        
-        // 카메라에서 캡쳐된 화면은 pixelBuffer에 담김.
-        // Vision 프레임워크에서는 이미지 대신 pixelBuffer를 바로 사용 가능
-        guard let pixelBuffer = pixelBuffer else { return }
-
-            // 추론!
-            self.predictUsingVision(pixelBuffer: pixelBuffer) { }
+        }
     }
 }
 
