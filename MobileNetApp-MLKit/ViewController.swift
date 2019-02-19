@@ -11,48 +11,61 @@ import Firebase
 
 class ViewController: UIViewController {
     
-    // MARK: - UI 프로퍼티
-    
+    // MARK: - UI Properties
     @IBOutlet weak var videoPreview: UIView!
     @IBOutlet weak var labelLabel: UILabel!
     @IBOutlet weak var confidenceLabel: UILabel!
     
+    @IBOutlet weak var inferenceLabel: UILabel!
+    @IBOutlet weak var etimeLabel: UILabel!
+    @IBOutlet weak var fpsLabel: UILabel!
     
     
     var interpreter: ModelInterpreter?
     var ioOptions: ModelInputOutputOptions?
     
-    // MARK: - MLKit 프로퍼티
+    // MARK - Performance Measurement Property
+    private let 👨‍🔧 = 📏()
+    
+    // MARK: - MLKit Properties
     
     // 모델을 불러오고 물체를 인지할 수 있게 도와주는 Detector입니다.
     let detectorService = DetectorService()
     
-    // MARK: - AV 프로퍼티
-    
+    // MARK: - AV Properties
     var videoCapture: VideoCapture!
     
     
-    // MARK: - 라이프사이클 메소드
-
+    // MARK: - View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // 모델 로드
+        // setup the model
         self.labelLabel.text = "로컬에 있는 모델을 불러오고 있습니다...\n"
         loadLocalModel()
         
-        // 카메라 세팅
+        // setup camera
         setUpCamera()
         
+        // setup delegate for performance measurement
+        👨‍🔧.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.videoCapture.start()
+    }
     
-    // MARK: - 초기 세팅
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.videoCapture.stop()
+    }
     
+    // MARK: - SetUp Video
     func setUpCamera() {
         videoCapture = VideoCapture()
         videoCapture.delegate = self
@@ -90,6 +103,9 @@ extension ViewController: VideoCaptureDelegate {
         // Vision 프레임워크에서는 이미지 대신 pixelBuffer를 바로 사용 가능
         guard let pixelBuffer = pixelBuffer else { return }
         
+        // start of measure
+        self.👨‍🔧.🎬👏()
+        
         // 추론!
         self.predictUsingVision(pixelBuffer: pixelBuffer) { }
     }
@@ -101,22 +117,28 @@ extension ViewController {
         
         let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
         
-        DispatchQueue.global(qos: .userInitiated).async {
+        //DispatchQueue.global(qos: .userInitiated).async {
             let imageData = self.detectorService.scaledImageData(for: ciImage)
             self.detectorService.detectObjects(imageData: imageData) { (results, error) in
+                self.👨‍🔧.🏷(with: "endInference")
                 guard error == nil, let results = results, !results.isEmpty else {
                     let errorString = error?.localizedDescription ?? Constants.failedToDetectObjectsMessage
                     self.labelLabel.text = "Inference error: \(errorString)"
                     print("Inference error: \n\(errorString)")
+                    // end of measure
+                    self.👨‍🔧.🎬🤚()
                     return
                 }
                 
-                DispatchQueue.main.async {
+                //DispatchQueue.main.async {
                     self.show(for: results)
                     completion()
-                }
+                    
+                    // end of measure
+                    self.👨‍🔧.🎬🤚()
+                //}
             }
-        }
+        //}
         
     }
     
@@ -172,8 +194,17 @@ extension ViewController {
     }
 }
 
-// MARK: - Fileprivate
+// MARK: - 📏(Performance Measurement) Delegate
+extension ViewController: 📏Delegate {
+    func updateMeasure(inferenceTime: Double, executionTime: Double, fps: Int) {
+        //print(executionTime, fps)
+        self.inferenceLabel.text = "inference: \(Int(inferenceTime*1000.0)) mm"
+        self.etimeLabel.text = "execution: \(Int(executionTime*1000.0)) mm"
+        self.fpsLabel.text = "fps: \(fps)"
+    }
+}
 
+// MARK: - Fileprivate
 fileprivate enum Constants {
     static let labelsFilename = "labels"
     static let labelsFilename_kr = "labels_kr"

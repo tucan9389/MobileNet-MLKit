@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2CFAEC816A6D5C79AC9671DD /* Pods_MobileNetApp_MLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2137F9FCA3EA31A1AEAD16D5 /* Pods_MobileNetApp_MLKit.framework */; };
+		550AE911221B86FC0021C834 /* Measure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550AE910221B86FC0021C834 /* Measure.swift */; };
 		55573C5B20D77521005DC96F /* labels_kr.txt in Resources */ = {isa = PBXBuildFile; fileRef = 55573C5A20D77521005DC96F /* labels_kr.txt */; };
 		559B75A920D0B23E008055C5 /* VideoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559B75A820D0B23D008055C5 /* VideoCapture.swift */; };
 		559B75AF20D0D072008055C5 /* CMSampleBuffer+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559B75AE20D0D072008055C5 /* CMSampleBuffer+UIImage.swift */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		2137F9FCA3EA31A1AEAD16D5 /* Pods_MobileNetApp_MLKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MobileNetApp_MLKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		550AE910221B86FC0021C834 /* Measure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Measure.swift; sourceTree = "<group>"; };
 		55573C5720D77266005DC96F /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		55573C5A20D77521005DC96F /* labels_kr.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = labels_kr.txt; sourceTree = "<group>"; };
 		559B75A820D0B23D008055C5 /* VideoCapture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				55B3757C20C16B2D00779B99 /* AppDelegate.swift */,
 				55B3757E20C16B2D00779B99 /* ViewController.swift */,
 				559B75A820D0B23D008055C5 /* VideoCapture.swift */,
+				550AE910221B86FC0021C834 /* Measure.swift */,
 				55B3758020C16B2D00779B99 /* Main.storyboard */,
 				55573C5520D76C91005DC96F /* ML Helper */,
 				55573C5620D77044005DC96F /* Resource */,
@@ -375,6 +378,7 @@
 			files = (
 				55B3757F20C16B2D00779B99 /* ViewController.swift in Sources */,
 				559B75AF20D0D072008055C5 /* CMSampleBuffer+UIImage.swift in Sources */,
+				550AE911221B86FC0021C834 /* Measure.swift in Sources */,
 				559B75B320D0EE9D008055C5 /* CGImage+TFLite.swift in Sources */,
 				55B375A720C223AE00779B99 /* UIImage+TFLite.swift in Sources */,
 				55B3757D20C16B2D00779B99 /* AppDelegate.swift in Sources */,
