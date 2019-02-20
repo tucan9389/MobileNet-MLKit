@@ -1,5 +1,9 @@
 # MobileNetApp-MLKit
 
+![platform-ios](https://img.shields.io/badge/platform-ios-lightgrey.svg)
+![swift-version](https://img.shields.io/badge/swift-4-red.svg)
+![lisence](https://img.shields.io/badge/license-MIT-black.svg)
+
 본 프로젝트는 [MoTLabs/mot-ios-tensorflow](https://github.com/motlabs/mot-ios-tensorflow)에서 연재하는 iOS용 머신러닝 모델 사용법에대한 예제프로젝트입니다.<br>
 
 ![DEMO-MLKit](https://github.com/tucan9389/MobileNetApp-MLKit/raw/master/resource/MobileNet-MLKit-DEMO.gif?raw=true)
